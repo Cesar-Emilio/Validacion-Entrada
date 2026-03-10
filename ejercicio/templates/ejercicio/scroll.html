@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="container my-5">
+    <h1 class="text-center mb-4 text-primary-emphasis">Cuentos de pochacco para niños</h1>
+
+    <div class="row g-4" id="contenido">
+    </div>
+</div>
+
+<div class="container my-4">
+    <div class="d-grid">
+        <a href="{% url 'formulario' %}" class="btn btn-primary btn-lg">
+            Regresar al Formulario
+        </a>
+    </div>
+</div>
+
+<script>
+    const titulos = [
+        "Pochacco leyendo",
+        "Pochacco pintando",
+        "Pochacco haciendo ejercicio",
+        "Pochacco jugandooo",
+        "Pochacco saludando",
+        "Pochacco corriendo",
+        "Pochacco mexa",
+        "Pochacco y sus globos",
+        "Pochacco y ratoncito",
+        "Pochacco y el helado",
+    ];
+
+    const descripciones = [
+        "Pochacco lee algo muy interesante",
+        "Pochacco aprende a pintar y muy lindo",
+        "Pochacco hace jercicio por salud",
+        "Pochacco juega para aprender un deporte",
+        "Pochacco intenbta ser amable",
+        "Pochacco corre un maraton muy cansado",
+        "SPochacco aprende de la cultura mexicana",
+        "Pochacco aprende a salir de la casa",
+        "Pochacco tiene una linda amistad",
+        "Pochacco come heladito",
+    ];
+
+    const imagenes = [
+        "{% static 'img/im1.png' %}",
+        "{% static 'img/im2.png' %}",
+        "{% static 'img/im3.jpg' %}",
+        "{% static 'img/im4.jpg' %}",
+        "{% static 'img/im5.png' %}",
+        "{% static 'img/im6.png' %}",
+        "{% static 'img/im7.png' %}",
+        "{% static 'img/im8.png' %}",
+        "{% static 'img/im9.png' %}",
+        "{% static 'img/im10.png' %}",
+    ];
+
+    const contenedor = document.getElementById("contenido");
+
+    function crearCard() {
+        const index = Math.floor(Math.random() * 10);
+
+        const col = document.createElement("div");
+        col.className = "col-4 mb-3";
+
+        col.innerHTML = `
+            <div class="card mb-3 shadow-sm" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="${imagenes[index]}" 
+                            class="img-fluid rounded-start"
+                            style="height: 100%; object-fit: cover;"
+                            alt="${titulos[index]}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title text-info">${titulos[index]}</h5>
+                            <p class="card-text text-secondary">${descripciones[index]}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        contenedor.appendChild(col);
+    }
+
+    // Cargar cards iniciales
+    for (let i = 0; i < 12; i++) {
+        crearCard();
+    }
+
+    // OnePage: cargar más al hacer scroll
+    let totalCards = 0;
+    window.addEventListener("scroll", () => {
+        if (
+            window.innerHeight + window.scrollY >= document.body.offsetHeight - 50 &&
+            totalCards < 100
+        ) {
+            crearCard();
+            crearCard();
+            crearCard();
+            totalCards += 3;
+        }
+    });
+</script>
+
+{% endblock %}

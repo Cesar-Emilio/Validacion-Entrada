@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+
+                    <h3 class="text-center mb-4 fw-bold">
+                        Portal de Servicios Escolares
+                    </h3>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors|striptags }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Enviar información
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="d-grid mt-3">
+                        <a href="{% url 'scroll' %}" class="btn btn-secondary btn-lg">
+                            Ver scroll
+                        </a>
+                    </div>
+
+                    {% if success %}
+                    <div class="alert alert-success text-center mt-4" role="alert">
+                        ¡Datos impresos en consola correctamente!
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
